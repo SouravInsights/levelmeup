@@ -6,7 +6,7 @@ import { EnhancedResume, Resume } from "@/app/lib/types";
 
 const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
-export const ResumeSchema = z.object({
+const ResumeSchema = z.object({
   personalInfo: z.object({
     name: z.string(),
     email: z.string(),
