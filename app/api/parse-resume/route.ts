@@ -354,7 +354,7 @@ function calculateOverallConfidence(resume: Resume): number {
   return Math.min(1, overallConfidence);
 }
 
-export function enhanceParseResults(
+function enhanceParseResults(
   resume: Resume,
   originalText: string
 ): EnhancedResume {
