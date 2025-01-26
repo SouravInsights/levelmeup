@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import type { ParsedResume } from "@/app/lib/types";
+import { ParsedResumeView } from "./ParsedResumeView";
 
 export function ResumeUploader() {
   const [isUploading, setIsUploading] = useState(false);
@@ -81,13 +82,13 @@ export function ResumeUploader() {
     setParsedResume(null);
   }
 
-  // Transform skills object into an array of { category, skills } for rendering
-  const skillsArray = parsedResume
-    ? Object.entries(parsedResume.skills).map(([category, skills]) => ({
-        category,
-        skills,
-      }))
-    : [];
+  // // Transform skills object into an array of { category, skills } for rendering
+  // const skillsArray = parsedResume
+  //   ? Object.entries(parsedResume.skills).map(([category, skills]) => ({
+  //       category,
+  //       skills,
+  //     }))
+  //   : [];
 
   return (
     <Card className="p-6">
@@ -135,151 +136,8 @@ export function ResumeUploader() {
             </div>
 
             {parsedResume && (
-              <div className="mt-6 space-y-6">
-                {/* Personal Info */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Personal Info</h3>
-                  <div className="space-y-2">
-                    <p>
-                      <span className="font-medium">Name:</span>{" "}
-                      {parsedResume.personalInfo.name}
-                    </p>
-                    <p>
-                      <span className="font-medium">Email:</span>{" "}
-                      {parsedResume.personalInfo.email}
-                    </p>
-                    <p>
-                      <span className="font-medium">Phone:</span>{" "}
-                      {parsedResume.personalInfo.phone}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Skills */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Skills</h3>
-                  <div className="space-y-4">
-                    {skillsArray.map(({ category, skills }, index) => (
-                      <div key={index}>
-                        <h4 className="text-sm font-medium mb-2">
-                          {category.replace(/([A-Z])/g, " $1").trim()}
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {skills.map((skill, skillIndex) => (
-                            <span
-                              key={skillIndex}
-                              className="px-2 py-1 bg-primary/10 rounded-full text-xs"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Experience */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Experience</h3>
-                  <div className="space-y-4">
-                    {parsedResume.experience.map((exp, index) => (
-                      <div key={index} className="space-y-2">
-                        <p className="font-medium">
-                          {exp.role} at {exp.company}
-                        </p>
-                        <p className="text-muted-foreground">{exp.duration}</p>
-                        <div className="space-y-1">
-                          <h4 className="text-sm font-medium">
-                            Responsibilities
-                          </h4>
-                          <ul className="list-disc list-inside text-sm">
-                            {exp.responsibilities.map((resp, respIndex) => (
-                              <li key={respIndex}>{resp}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="space-y-1">
-                          <h4 className="text-sm font-medium">Transactions</h4>
-                          <ul className="space-y-2">
-                            {exp.transactions?.map((txn, txnIndex) => (
-                              <li key={txnIndex} className="text-sm">
-                                <p className="font-medium">{txn.type}</p>
-                                <p className="text-muted-foreground">
-                                  {txn.value}
-                                </p>
-                                <p>{txn.description}</p>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Education */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Education</h3>
-                  <div className="space-y-4">
-                    {parsedResume.education.map((edu, index) => (
-                      <div key={index} className="space-y-1">
-                        <p className="font-medium">{edu.degree}</p>
-                        <p className="text-muted-foreground">
-                          {edu.institution} ({edu.year})
-                        </p>
-                        <p>{edu.score}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Certifications */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Certifications</h3>
-                  <div className="space-y-4">
-                    {parsedResume.certifications.map((cert, index) => (
-                      <div key={index} className="space-y-1">
-                        <p className="font-medium">{cert.name}</p>
-                        <p className="text-muted-foreground">
-                          {cert.issuer} ({cert.year})
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Publications */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Publications</h3>
-                  <div className="space-y-4">
-                    {parsedResume.publications.map((pub, index) => (
-                      <div key={index} className="space-y-1">
-                        <p className="font-medium">{pub.title}</p>
-                        <p className="text-muted-foreground">
-                          {pub.journal} ({pub.year})
-                        </p>
-                        <p>Topic: {pub.topic}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Achievements */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Achievements</h3>
-                  <div className="space-y-4">
-                    {parsedResume.achievements.map((ach, index) => (
-                      <div key={index} className="space-y-1">
-                        <p className="font-medium">{ach.title}</p>
-                        <p className="text-muted-foreground">
-                          {ach.organization} ({ach.year})
-                        </p>
-                        <p>Category: {ach.category}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              <div className="mt-6">
+                <ParsedResumeView resume={parsedResume} />
               </div>
             )}
           </div>
