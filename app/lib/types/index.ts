@@ -9,6 +9,7 @@ export interface Job {
   requirements: string[];
   isRemote: boolean;
   url: string;
+  salary?: string;
 }
 
 export interface SkillGap {
@@ -184,3 +185,33 @@ export interface EnhancedResume extends Resume {
     textLength: number;
   };
 }
+
+export interface JobListing {
+  title: string;
+  company: string;
+  location: string;
+  isRemote: boolean;
+  description: string;
+  requirements: string[];
+  responsibilities: string[];
+  salary?: string;
+  postedDate?: string;
+  employmentType?: string;
+  experienceLevel?: string;
+  url: string;
+}
+
+export const JobSchema = z.object({
+  title: z.string(),
+  company: z.string(),
+  location: z.string(),
+  isRemote: z.boolean(),
+  description: z.string(),
+  requirements: z.array(z.string()),
+  responsibilities: z.array(z.string()),
+  salary: z.string().optional(),
+  postedDate: z.string().optional(),
+  employmentType: z.string().optional(),
+  experienceLevel: z.string().optional(),
+  url: z.string(),
+});

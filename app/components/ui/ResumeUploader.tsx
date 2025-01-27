@@ -8,7 +8,11 @@ import { useToast } from "@/hooks/use-toast";
 import type { ParsedResume } from "@/app/lib/types";
 import { ParsedResumeView } from "./ParsedResumeView";
 
-export function ResumeUploader() {
+interface ResumeUploaderProps {
+  onParsed?: (resume: ParsedResume) => void;
+}
+
+export function ResumeUploader({ onParsed }: ResumeUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [parsedResume, setParsedResume] = useState<ParsedResume | null>(null);
@@ -58,6 +62,7 @@ export function ResumeUploader() {
 
       if (data.success) {
         setParsedResume(data.data);
+        onParsed?.(data.data);
         toast({
           title: "Resume parsed successfully",
           description: "Your resume has been analyzed",
@@ -81,14 +86,6 @@ export function ResumeUploader() {
     setFile(null);
     setParsedResume(null);
   }
-
-  // // Transform skills object into an array of { category, skills } for rendering
-  // const skillsArray = parsedResume
-  //   ? Object.entries(parsedResume.skills).map(([category, skills]) => ({
-  //       category,
-  //       skills,
-  //     }))
-  //   : [];
 
   return (
     <Card className="p-6">
