@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 
-// app/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -18,54 +17,71 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import TextRotate from "@/components/fancy/text-rotate";
+import { HowItWorks } from "./components/HowItWorks";
+import { cn } from "@/lib/utils";
+import { CTASection } from "./components/CTASection";
+import { Footer } from "./components/Footer";
+import { Nametag } from "./components/Nametag";
 
 const roles = [
   {
     icon: Code2,
     title: "Frontend Engineer",
-    description: "React • Vue • Angular • UI/UX • Web Performance",
-    color: "text-blue-500",
+    description: "Build beautiful user interfaces with React, Vue, or Svelte",
     bgColor: "bg-blue-500/10",
+    textColor: "text-blue-500",
+    borderColor: "border-blue-200",
+    skills: ["React", "Vue", "Svelte", "UI/UX", "Web Performance"],
   },
   {
     icon: Server,
     title: "Backend Engineer",
-    description: "APIs • Databases • System Design • Cloud",
-    color: "text-green-500",
-    bgColor: "bg-green-500/10",
+    description: "Design scalable systems and robust APIs",
+    bgColor: "bg-purple-500/10",
+    textColor: "text-purple-500",
+    borderColor: "border-purple-200",
+    skills: ["APIs", "Databases", "System Design", "Cloud"],
   },
   {
     icon: Laptop,
     title: "Fullstack Engineer",
-    description: "End-to-end Development • Full Application Lifecycle",
-    color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
+    description: "Master both frontend and backend development",
+    bgColor: "bg-green-500/10",
+    textColor: "text-green-500",
+    borderColor: "border-green-200",
+    skills: ["End-to-end", "Full App Lifecycle", "Architecture"],
   },
   {
     icon: CloudCog,
     title: "DevOps Engineer",
-    description: "CI/CD • Infrastructure • Cloud • Monitoring",
-    color: "text-orange-500",
+    description: "Automate and optimize infrastructure",
     bgColor: "bg-orange-500/10",
+    textColor: "text-orange-500",
+    borderColor: "border-orange-200",
+    skills: ["CI/CD", "Cloud", "Infrastructure", "Monitoring"],
   },
   {
     icon: Scale,
     title: "Corporate Lawyer",
-    description: "M&A • Venture Capital • Compliance • Due Diligence",
-    color: "text-red-500",
-    bgColor: "bg-red-500/10",
+    description: "Navigate complex business transactions",
+    bgColor: "bg-indigo-500/10",
+    textColor: "text-indigo-500",
+    borderColor: "border-indigo-200",
+    skills: ["M&A", "Venture Capital", "Compliance", "Due Diligence"],
   },
   {
     icon: Briefcase,
     title: "IP Lawyer",
-    description: "Patents • Trademarks • IP Litigation • Licensing",
-    color: "text-teal-500",
-    bgColor: "bg-teal-500/10",
+    description: "Protect and manage intellectual property",
+    bgColor: "bg-rose-500/10",
+    textColor: "text-rose-500",
+    borderColor: "border-rose-200",
+    skills: ["Patents", "Trademarks", "IP Litigation", "Licensing"],
   },
 ];
 
 export default function Home() {
-  const { ref, inView } = useInView({
+  const { ref } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
@@ -157,45 +173,101 @@ export default function Home() {
       </section>
 
       {/* Roles Grid */}
-      <section ref={ref} className="py-20 px-4 md:px-6 lg:px-8 bg-muted/50">
+      <section ref={ref} className="py-20 px-4 bg-slate-50/50">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Specialized Role Support
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Smart parsing and matching for various tech and legal roles
-            </p>
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl font-bold mb-4">Explore Career Paths</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Whether you're in tech or law, we've got you covered with
+                specialized role matching
+              </p>
+            </motion.div>
           </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {roles.map((role, index) => (
               <motion.div
                 key={role.title}
                 initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
               >
                 <div
-                  className={`h-[200px] p-6 rounded-xl border bg-card ${role.bgColor} flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200`}
+                  className={cn(
+                    "group relative p-6 rounded-2xl border bg-white",
+                    "transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
+                    "h-[280px] flex flex-col", // Fixed height and flex column
+                    role.borderColor
+                  )}
                 >
+                  {/* Top Section with Icon and Title */}
                   <div>
-                    <role.icon className={`h-12 w-12 ${role.color}`} />
-                    <h3 className="mt-4 text-xl font-semibold">{role.title}</h3>
+                    {/* Icon Circle */}
+                    <div
+                      className={cn(
+                        "w-16 h-16 rounded-full flex items-center justify-center",
+                        "transition-transform duration-500 group-hover:scale-110",
+                        role.bgColor
+                      )}
+                    >
+                      <role.icon className={cn("w-8 h-8", role.textColor)} />
+                    </div>
+
+                    <h3 className="text-xl font-semibold mt-6 mb-2">
+                      {role.title}
+                    </h3>
+                    <p className="text-muted-foreground">{role.description}</p>
                   </div>
-                  <p className="mt-2 text-muted-foreground text-sm">
-                    {role.description}
-                  </p>
+
+                  {/* Skills Tags - Always at Bottom */}
+                  <div className="mt-auto pt-4">
+                    <div className="flex flex-wrap gap-2">
+                      {role.skills.map((skill, skillIndex) => (
+                        <span
+                          key={skillIndex}
+                          className={cn(
+                            "px-2 py-1 rounded-full text-xs whitespace-nowrap",
+                            role.bgColor,
+                            role.textColor
+                          )}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Decorative Number */}
+                  <div
+                    className={cn(
+                      "absolute -top-4 -right-4 w-8 h-8 rounded-full",
+                      "flex items-center justify-center text-sm font-bold",
+                      role.bgColor,
+                      role.textColor
+                    )}
+                  >
+                    {index + 1}
+                  </div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
+
+      <HowItWorks />
+
+      <CTASection />
+
+      <Footer />
+
+      <Nametag />
     </main>
   );
 }
