@@ -45,11 +45,11 @@ export default function AnalyzePage() {
         ) : (
           <>
             <h1 className="text-3xl font-bold text-center mb-8">
-              Upload Your Legal Resume
+              Upload Your Resume
             </h1>
             <p className="text-center text-muted-foreground mb-8">
-              Upload your resume to find matching remote legal opportunities and
-              get personalized career insights.
+              Upload your resume to find matching remote opportunities and get
+              personalized career insights.
             </p>
             <ResumeUploader onParsed={setParsedResume} />
           </>
